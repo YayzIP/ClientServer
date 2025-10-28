@@ -7,15 +7,12 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        ServerSocket serverSocket = new ServerSocket(3000);
-
-        while (true) {
-
-            Socket client = serverSocket.accept();
-            System.out.println("Nuovo user connesso");
-
-            ClientHandler ClientHandler = new ClientHandler(client);
-            ClientHandler.start();
+        try (ServerSocket serverSocket = new ServerSocket(3000)) {
+            do {
+                Socket client = serverSocket.accept();
+                ClientHandler ClientHandler = new ClientHandler(client);
+                ClientHandler.start();
+            } while (true);
         }
 
     }

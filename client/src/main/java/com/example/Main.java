@@ -11,10 +11,10 @@ public class Main {
 
         String ip = "localhost";
 
-        final Socket boscheriniSocket = new Socket(ip, 3000);
+        final Socket mySocket = new Socket(ip, 3000);
         System.out.println("connessione effettuata");
-        final BufferedReader in = new BufferedReader(new InputStreamReader(boscheriniSocket.getInputStream()));
-        final PrintWriter out = new PrintWriter(boscheriniSocket.getOutputStream(), true);
+        final BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+        final PrintWriter out = new PrintWriter(mySocket.getOutputStream(), true);
 
         final ThreadReader tr = new ThreadReader(in);
         final ThreadWriter tw = new ThreadWriter(out);
@@ -27,7 +27,7 @@ public class Main {
             tw.join();
         } catch (InterruptedException e) {
             System.out.println("connessione terminata");
-            boscheriniSocket.close();
+            mySocket.close();
         }
     }
 }

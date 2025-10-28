@@ -18,16 +18,25 @@ public class ClientHandler extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
-            out.println("Ti sei connesso! Sono Gigio e qualunque cosa tu scriva te la manderò indietro in maiuscolo");
-            String messaggio;
+            System.out.println("Nuovo user connesso: " + client.getInetAddress());
 
+            out.println(
+                    "Ti sei connesso! Sono Gigio e qualunque cosa tu scriva te la manderò indietro in maiuscolo. Per uscire digita exit");
+
+            String messaggio;
             do {
                 out.println("Inserisci la stringa:");
                 messaggio = in.readLine();
+
+                if (messaggio.equalsIgnoreCase("!")) {
+                    out.println("Thanks!");
+                    break;
+                }
+
                 if (messaggio != null) {
                     out.println(messaggio.toUpperCase());
                 }
-            } while (messaggio != null && !messaggio.equalsIgnoreCase("end"));
+            } while (messaggio != null);
 
             client.close();
             System.out.println("Connessione chiusa con " + client.getInetAddress());
